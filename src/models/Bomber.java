@@ -3,16 +3,26 @@ package models;
 import techniques.Engine;
 import constants.Constants;
 
-
+/**
+ * @author MAY THY
+ *
+ * Class to define bomber. A bomber is a aircraft has equipment engine technology.
+ */
 public class Bomber extends Aircraft implements Engine {
 	
+	// array elements of engine
 	private Point[] engine;
-	private int hitEngineCounts;
+	
+	// number of bullets attacked engine
+	private int hitEngineCounts = 0;
+	
+	// number of elements of engine
 	private int engineCounts;
 	
 	public Bomber(Point header, int direction) {
 		super(header, direction);
 		
+		// TODO Styling bomber here
 		setAppearance(Constants.BOMBER_APPEARANCE);
 		setEngine(Constants.BOMBER_ENGINE);
 		setCabin(Constants.BOMBER_CABIN);
@@ -21,6 +31,7 @@ public class Bomber extends Aircraft implements Engine {
 	public Bomber(String input) {
 		super(input);
 		
+		// TODO Styling bomber here
 		setAppearance(Constants.BOMBER_APPEARANCE);
 		setEngine(Constants.BOMBER_ENGINE);
 		setCabin(Constants.BOMBER_CABIN);
@@ -62,6 +73,7 @@ public class Bomber extends Aircraft implements Engine {
 		}
 		if (!getCrashed()) {
 			if (bullet.isAElement(engine)) {
+				setHit(true);
 				hitEngineCounts++;
 				engine = bullet.removeFromArray(engine);
 			}

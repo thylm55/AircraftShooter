@@ -1,7 +1,16 @@
 package models;
 
+/**
+ * @author MAY THY
+ *
+ * Class to define point in game.
+ */
 public class Point {
+	
+	// attribute row
 	private int row;
+	
+	// attribute column
 	private int column;
 	
 	public Point(int row, int column) {
@@ -29,19 +38,18 @@ public class Point {
 		System.out.println("(" + this.row + ", " + this.column + ")");
 	}
 	
-/*	public Point multiply(int n) {
-		int mX = this.row * n;
-		int mY = this.column * n;
-		Point mP = new Point(mX, mY);
-		return mP;
-	}*/
-	
 	public Point addition(Point point) {
 		int aRow = this.row + point.row;
 		int aColumn = this.column + point.column;
 		return new Point(aRow, aColumn);
 	}
 	
+	/**
+	 * Spin a point around a another point (center) follow to (direction)
+	 * @param center
+	 * @param direction
+	 * @return
+	 */
 	public Point spin(Point center, int direction) {
 		// South
 		if (direction == 1) {
@@ -87,6 +95,11 @@ public class Point {
 		}
 	}
 	
+	/**
+	 * To compare two points
+	 * @param point
+	 * @return
+	 */
 	public boolean equals(Point point) {
 		if (this.row == point.row  && this.column == point.column) {
 			return true;
@@ -95,6 +108,11 @@ public class Point {
 		}
 	}
 	
+	/**
+	 * check if point is a element of array
+	 * @param points
+	 * @return
+	 */
 	public boolean isAElement(Point[] points) {
 		boolean isAElement = false;
 		for (Point point: points) {
@@ -103,6 +121,11 @@ public class Point {
 		return isAElement;
 	}
 	
+	/**
+	 * Add point to a points array
+	 * @param points
+	 * @return
+	 */
 	public Point[] addToArray(Point[] points) {
 		int size = points.length;
 		Point[] newPoints = new Point[size + 1];
@@ -113,16 +136,13 @@ public class Point {
 		return newPoints;
 	}
 	
-	public boolean search(Point[] points) {
-		boolean result = false;
-		for (Point point: points) {
-			if (this.equals(point)) result = true;
-		}
-		return result;
-	}
-	
+	/**
+	 * Remove point from a points array
+	 * @param points
+	 * @return
+	 */
 	public Point[] removeFromArray(Point[] points) {
-		if (this.search(points)) {
+		if (this.isAElement(points)) {
 			int size = points.length;
 			Point[] newPoints = new Point[size - 1];
 			int i = 0;

@@ -2,9 +2,18 @@ package models;
 
 import constants.Constants;
 
-
-public abstract class Aircraft {
+/**
+ * @author MAY THY
+ *
+ * Class to define aircraft.
+ */
+public class Aircraft {
 	
+	/**
+	 * Constructor to initials an aircraft with special header & direction
+	 * @param header
+	 * @param direction
+	 */
 	public Aircraft(Point header, int direction) {
 		this.cabin = null;
 		this.header = header;
@@ -12,6 +21,10 @@ public abstract class Aircraft {
 		this.crashed = false;
 	}
 	
+	/**
+	 * Constructor to initials an aircraft from a string.
+	 * @param input
+	 */
 	public Aircraft(String input) {
 		String[] splitted = input.split(" ");
 		
@@ -40,12 +53,16 @@ public abstract class Aircraft {
 	// save appearance's array of positions
 	protected Point[] appearance;
 	
+	// state of aircraft after got bullet
+	protected boolean hit;
+	
 	// save state of aircraft
 	protected boolean crashed;
 	
 	// value to save number of bullet hit to body of aircraft
 	protected int hitBodyCounts;
 	
+	// set cabin for aircraft
 	protected void setCabin(Point cabin) {
 		this.cabin = initComponent(cabin);
 	}
@@ -55,12 +72,31 @@ public abstract class Aircraft {
 		this.appearance = initComponent(data);
 	}
 	
+	/**
+	 * set state of aircraft is hit or miss
+	 * @param hit
+	 */
+	public void setHit(boolean hit) {
+		this.hit = hit;
+	}
+	
+	/**
+	 * get latest hit/miss state of aircraft
+	 * @return
+	 */
+	public boolean isHit() {
+		return hit;
+	}
+	
 	// set state of aircraft is crashed or not
 	protected void setCrashed(boolean crashed) {
 		this.crashed = crashed;
 	}
 	
-	// get crashed state of aircraft
+	/**
+	 * get crashed state of aircraft
+	 * @return
+	 */
 	public boolean getCrashed() {
 		return crashed;
 	}
@@ -90,11 +126,11 @@ public abstract class Aircraft {
 		return plus;
 	}
 	
-	// add aircraft to map
+	/**
+	 * add aircraft to map
+	 * @param map
+	 */
 	public void addToMap(Map map) {
-		// add header
-		map.addPoint(header, Constants.SYMBOL_APPEARANCE);
-		
 		// add cabin if having
 		if (cabin != null) {
 			map.addPoint(cabin, Constants.SYMBOL_CABIN);
@@ -114,10 +150,15 @@ public abstract class Aircraft {
 		return appearance;
 	}
 	
-	// aircraft got a bullet
+	/**
+	 * aircraft got a bullet
+	 * @param bullet
+	 */
 	public void gotBullet(Point bullet) {
+		setHit(false);
 		if (cabin != null) {
 			if (bullet.equals(cabin)) {
+				setHit(true);
 				setCrashed(true);
 			}
 		}
@@ -126,6 +167,7 @@ public abstract class Aircraft {
 	// aircraft got a bullet into body
 	protected void gotBulletIntoBody(int conditionCrash, Point bullet) {
 		if (bullet.isAElement(getPoints())) {
+			setHit(true);
 			hitBodyCounts++;
 			appearance = bullet.removeFromArray(appearance);
 		}
